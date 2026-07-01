@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="/hi.css">
+</head>
+<body>
+    <header>
+        <h1>🏥 City Care Hospital</h1>
+        <nav>
+            <a href="#">Home</a> |
+            <a href="#">Doctors</a> |
+            <a href="#">Departments</a> |
+            <a href="#">Patients</a> |
+            <a href="#">Appointments</a> |
+            <a href="#">Laboratory</a> |
+            <a href="#">Pharmacy</a> |
+            <a href="#">Billing</a> |
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+    <hr>
+    <section>
+        <h2>Book Appointment</h2>
+        <form id="appointmentForm">
+            <label>Patient Name</label><br>
+            <input type="text" id="patientName" required><br><br>
+            <label>Age</label><br>
+            <input type="number" id="age" required><br><br>
+            <label>Gender</label><br>
+            <input type="radio" name="gender" value="Male" required> Male
+            <input type="radio" name="gender" value="Female" required> Female<br><br>
+            <label>Phone Number</label><br>
+            <input type="tel" id="phoneNumber" required><br><br>
+            <label>Email</label><br>
+            <input type="email" id="email" required><br><br>
+            <label>Select Department</label><br>
+            <select id="department" required>
+                <option value="">Select Department</option>
+                <option>Cardiology</option>
+                <option>Neurology</option>
+                <option>Orthopedics</option>
+                <option>ENT</option>
+                <option>Dermatology</option>
+            </select><br><br>
+            <label>Select Doctor</label><br>
+            <select id="doctor" required>
+                <option value="">Select Doctor</option>
+                <option>Dr. Rajesh Kumar</option>
+                <option>Dr. Priya Sharma</option>
+                <option>Dr. Amit Patel</option>
+            </select><br><br>
+            <label>Appointment Date</label><br>
+            <input type="date" id="appointmentDate" required><br><br>
+            <label>Appointment Time</label><br>
+            <input type="time" id="appointmentTime" required><br><br>
+            <label>Reason</label><br>
+            <textarea id="reason" rows="5" cols="50" required></textarea><br><br>
+            <input type="submit" value="Book Appointment">
+            <input type="reset" value="Reset">
+        </form>
+    </section>
+    <hr>
+    <section>
+        <h2>Patient Registration</h2>
+        <form id="patientRegisterForm">
+            <label>Patient ID</label><br>
+            <input type="text" id="patientId" required><br><br>
+            <label>Full Name</label><br>
+            <input type="text" id="regName" required><br><br>
+            <label>Blood Group</label><br>
+            <select id="bloodGroup" required>
+                <option value="">Select Blood Group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>AB+</option>
+                <option>O+</option>
+            </select><br><br>
+            <label>Address</label><br>
+            <textarea id="address" rows="4" cols="40" required></textarea><br><br>
+            <input type="submit" value="Register Patient">
+        </form>
+    </section>
+    <hr>
+    <footer>
+        <h3>City Care Hospital</h3>
+        <p>Email : info@citycarehospital.com</p>
+        <p>Phone : +91 9876543210</p>
+        <p>Address : Hyderabad, Telangana, India</p>
+        <p>© 2026 City Care Hospital. All Rights Reserved.</p>
+    </footer>
+    <script src="/script.js"></script>
+</body>
+</html>
