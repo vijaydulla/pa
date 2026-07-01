@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="hi.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+
+        <h1>🏥 City Care Hospital</h1>
+
+        <nav>
+            <a href="#">Home</a> |
+            <a href="#">Doctors</a> |
+            <a href="#">Departments</a> |
+            <a href="#">Patients</a> |
+            <a href="#">Appointments</a> |
+            <a href="#">Laboratory</a> |
+            <a href="#">Pharmacy</a> |
+            <a href="#">Billing</a> |
+            <a href="#">Contact</a>
+        </nav>
+
+    </header>
+
+    <hr>
+
+    <!-- Welcome Section -->
+
+    <section>
+
+        <h2>Welcome to City Care Hospital</h2>
+
+        <p>
+            City Care Hospital provides world-class healthcare services with
+            experienced doctors, modern laboratories, emergency services,
+            pharmacy, ICU, and advanced operation theatres.
+        </p>
+
+    </section>
+
+    <hr>
+
+    <!-- Hospital Information -->
+
+    <section>
+
+        <h2>Hospital Information</h2>
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+                <th>Hospital Name</th>
+                <td>City Care Hospital</td>
+            </tr>
+
+            <tr>
+                <th>Established</th>
+                <td>2005</td>
+            </tr>
+
+            <tr>
+                <th>Emergency</th>
+                <td>24 × 7</td>
+            </tr>
+
+            <tr>
+                <th>Ambulances</th>
+                <td>15</td>
+            </tr>
+
+            <tr>
+                <th>Departments</th>
+                <td>18</td>
+            </tr>
+
+            <tr>
+                <th>Doctors</th>
+                <td>150+</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+    <hr>
+
+    <!-- Departments -->
+
+    <section>
+
+        <h2>Departments</h2>
+
+        <ul>
+
+            <li>Cardiology</li>
+            <li>Neurology</li>
+            <li>Orthopedics</li>
+            <li>Dermatology</li>
+            <li>Pediatrics</li>
+            <li>ENT</li>
+            <li>Dentistry</li>
+            <li>Gynecology</li>
+            <li>Nephrology</li>
+            <li>Pulmonology</li>
+            <li>Oncology</li>
+            <li>General Surgery</li>
+
+        </ul>
+
+    </section>
+
+    <hr>
+
+    <!-- Doctors -->
+
+    <section>
+
+        <h2>Doctors</h2>
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Experience</th>
+
+            </tr>
+
+            <tr>
+
+                <td>D101</td>
+                <td>Dr. Rajesh Kumar</td>
+                <td>Cardiology</td>
+                <td>15 Years</td>
+
+            </tr>
+
+            <tr>
+
+                <td>D102</td>
+                <td>Dr. Priya Sharma</td>
+                <td>Neurology</td>
+                <td>12 Years</td>
+
+            </tr>
+
+            <tr>
+
+                <td>D103</td>
+                <td>Dr. Amit Patel</td>
+                <td>Orthopedics</td>
+                <td>10 Years</td>
+
+            </tr>
+
+            <tr>
+
+                <td>D104</td>
+                <td>Dr. Kavya Rao</td>
+                <td>Dermatology</td>
+                <td>11 Years</td>
+
+            </tr>
+
+            <tr>
+
+                <td>D105</td>
+                <td>Dr. Sneha Reddy</td>
+                <td>Pediatrics</td>
+                <td>8 Years</td>
+
+            </tr>
+
+        </table>
+
+    </section>
+
+    <hr>
+
+    <!-- Appointment Form -->
+
+    <section>
+
+        <h2>Book Appointment</h2>
+
+        <form id="appointmentForm">
+
+            <label>Patient Name</label><br>
+            <input type="text" id="patientName" required><br><br>
+
+            <label>Age</label><br>
+            <input type="number" id="age" required><br><br>
+
+            <label>Gender</label><br>
+
+            <input type="radio" name="gender" value="Male" required> Male
+            <input type="radio" name="gender" value="Female" required> Female
+
+            <br><br>
+
+            <label>Phone Number</label><br>
+            <input type="tel" id="phoneNumber" required><br><br>
+
+            <label>Email</label><br>
+            <input type="email" id="email" required><br><br>
+
+            <label>Select Department</label>
+
+            <br>
+
+            <select id="department" required>
+
+                <option value="">Select Department</option>
+                <option>Cardiology</option>
+                <option>Neurology</option>
+                <option>Orthopedics</option>
+                <option>ENT</option>
+                <option>Dermatology</option>
+
+            </select>
+
+            <br><br>
+
+            <label>Select Doctor</label>
+
+            <br>
+
+            <select id="doctor" required>
+
+                <option value="">Select Doctor</option>
+                <option>Dr. Rajesh Kumar</option>
+                <option>Dr. Priya Sharma</option>
+                <option>Dr. Amit Patel</option>
+
+            </select>
+
+            <br><br>
+
+            <label>Appointment Date</label><br>
+            <input type="date" id="appointmentDate" required><br><br>
+
+            <label>Appointment Time</label><br>
+            <input type="time" id="appointmentTime" required><br><br>
+
+            <label>Reason</label><br>
+
+            <textarea id="reason" rows="5" cols="50" required></textarea>
+
+            <br><br>
+
+            <input type="submit" value="Book Appointment">
+
+            <input type="reset" value="Reset">
+
+        </form>
+
+    </section>
+
+    <hr>
+
+    <!-- Patient Registration -->
+
+    <section>
+
+        <h2>Patient Registration</h2>
+
+        <form id="patientRegisterForm">
+
+            <label>Patient ID</label><br>
+            <input type="text" id="patientId" required><br><br>
+
+            <label>Full Name</label><br>
+            <input type="text" id="regName" required><br><br>
+
+            <label>Blood Group</label><br>
+
+            <select id="bloodGroup" required>
+
+                <option value="">Select Blood Group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>AB+</option>
+                <option>O+</option>
+
+            </select>
+
+            <br><br>
+
+            <label>Address</label><br>
+
+            <textarea id="address" rows="4" cols="40" required></textarea>
+
+            <br><br>
+
+            <input type="submit" value="Register Patient">
+
+        </form>
+
+    </section>
+
+    <hr>
+
+    <!-- Laboratory -->
+
+    <section>
+
+        <h2>Laboratory Services</h2>
+
+        <ol>
+
+            <li>Blood Test</li>
+            <li>Urine Test</li>
+            <li>X-Ray</li>
+            <li>MRI Scan</li>
+            <li>CT Scan</li>
+            <li>ECG</li>
+            <li>Ultrasound</li>
+
+        </ol>
+
+    </section>
+
+    <hr>
+
+    <!-- Pharmacy -->
+
+    <section>
+
+        <h2>Pharmacy</h2>
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+
+                <th>Medicine</th>
+                <th>Stock</th>
+                <th>Price</th>
+
+            </tr>
+
+            <tr>
+
+                <td>Paracetamol</td>
+                <td>500</td>
+                <td>₹20</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Amoxicillin</td>
+                <td>300</td>
+                <td>₹150</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Vitamin C</td>
+                <td>450</td>
+                <td>₹90</td>
+
+            </tr>
+
+        </table>
+
+    </section>
+
+    <hr>
+
+    <!-- Emergency -->
+
+    <section>
+
+        <h2>Emergency Services</h2>
+
+        <h3>☎ Emergency Number</h3>
+
+        <p>108</p>
+
+        <h3>Ambulance Available 24×7</h3>
+
+        <p>Call Immediately for Emergency Assistance.</p>
+
+    </section>
+
+    <hr>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <h3>City Care Hospital</h3>
+
+        <p>Email : info@citycarehospital.com</p>
+
+        <p>Phone : +91 9876543210</p>
+
+        <p>Address : Hyderabad, Telangana, India</p>
+
+        <p>© 2026 City Care Hospital. All Rights Reserved.</p>
+
+    </footer>
+    <script src="script.js"></script>
+
+
+</body>
+</html>
