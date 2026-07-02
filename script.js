@@ -7,7 +7,7 @@ function renderCsvPreview() {
     const patientsPreview = document.getElementById("savedPatients");
 
     if (appointmentsPreview) {
-        fetch("/api/appointments")
+        fetch("/.netlify/functions/store/appointments")
             .then((response) => response.text())
             .then((data) => {
                 appointmentsPreview.textContent = data.trim() ? data : "Patient Name,Age,Gender,Phone,Email,Department,Doctor,Appointment Date,Appointment Time,Reason";
@@ -15,7 +15,7 @@ function renderCsvPreview() {
     }
 
     if (patientsPreview) {
-        fetch("/api/patients")
+        fetch("/.netlify/functions/store/patients")
             .then((response) => response.text())
             .then((data) => {
                 patientsPreview.textContent = data.trim() ? data : "Patient ID,Full Name,Blood Group,Address";
@@ -83,7 +83,7 @@ function bookAppointment() {
         return;
     }
 
-    fetch("/api/appointments", {
+    fetch("/.netlify/functions/store/appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -122,7 +122,7 @@ function registerPatient() {
         return;
     }
 
-    fetch("/api/patients", {
+    fetch("/.netlify/functions/store/patients", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

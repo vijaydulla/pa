@@ -1,6 +1,10 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const rootDir = __dirname;
 const appointmentsPath = path.join(rootDir, 'appointments.csv');
@@ -46,19 +50,22 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const { pathname } = url;
 
-    if (req.method === 'GET' && pathname === '/api/appointments') {
+    const isAppointmentsRequest = pathname === '/api/appointments' || pathname === '/.netlify/functions/store/appointments';
+    const isPatientsRequest = pathname === '/api/patients' || pathname === '/.netlify/functions/store/patients';
+
+    if (req.method === 'GET' && isAppointmentsRequest) {
         res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end(readText(appointmentsPath));
         return;
     }
 
-    if (req.method === 'GET' && pathname === '/api/patients') {
+    if (req.method === 'GET' && isPatientsRequest) {
         res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end(readText(patientsPath));
         return;
     }
 
-    if (req.method === 'POST' && pathname === '/api/appointments') {
+    if (req.method === 'POST' && isAppointmentsRequest) {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
@@ -87,7 +94,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    if (req.method === 'POST' && pathname === '/api/patients') {
+    if (req.method === 'POST' && isPatientsRequest) {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {

@@ -2,5 +2,10 @@
   "name": "city-care-hospital",
   "version": "1.0.0",
   "private": true,
-  "scripts": {}
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "@vercel/blob": "^0.26.0"
+  }
 }

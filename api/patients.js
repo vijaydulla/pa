@@ -1,31 +1,108 @@
 import fs from 'fs';
 import path from 'path';
+import { list, put } from '@vercel/blob';
 
 const filePath = path.join(process.cwd(), 'patients.csv');
+const blobKey = 'patients.csv';
+const header = 'Patient ID,Full Name,Blood Group,Address';
 
-function ensureFile() {
+function ensureLocalFile() {
   if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, 'Patient ID,Full Name,Blood Group,Address\n', 'utf8');
+    fs.writeFileSync(filePath, header + '\n', 'utf8');
   }
 }
 
-ensureFile();
+function escapeCsvValue(value) {
+  return `"${String(value).replace(/"/g, '""')}"`;
+}
 
-export default function handler(req, res) {
-  if (req.method === 'GET') {
-    const data = fs.readFileSync(filePath, 'utf8');
-    res.status(200).send(data);
-    return;
+function getJsonBody(req) {
+  if (req.body && typeof req.body === 'object' && !Array.isArray(req.body)) {
+    return req.body;
   }
 
-  if (req.method === 'POST') {
-    const body = req.body || {};
-    const values = [body.patientId || '', body.fullName || '', body.bloodGroup || '', body.address || ''];
-    const line = values.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',');
-    fs.appendFileSync(filePath, line + '\n', 'utf8');
-    res.status(200).json({ ok: true });
-    return;
+  if (typeof req.body === 'string') {
+    try {
+      return JSON.parse(req.body);
+    } catch (error) {
+      return {};
+    }
   }
 
-  res.status(405).json({ ok: false, message: 'Method not allowed' });
+  return {};
+}
+
+async function readExistingContent() {
+  const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
+
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    if (isProduction) {
+      throw new Error('Missing BLOB_READ_WRITE_TOKEN in the deployment environment.');
+    }
+
+    ensureLocalFile();
+    return fs.readFileSync(filePath, 'utf8');
+  }
+
+  try {
+    const { blobs } = await list({ prefix: blobKey, limit: 10, token: process.env.BLOB_READ_WRITE_TOKEN });
+    const existing = blobs.find((blob) => blob.pathname === blobKey || blob.pathname === `/${blobKey}`);
+    if (existing) {
+      const response = await fetch(existing.url);
+      if (response.ok) {
+        return await response.text();
+      }
+    }
+  } catch (error) {
+    console.error('Patient blob read failed:', error);
+  }
+
+  const initialContent = header + '\n';
+  await put(blobKey, initialContent, {
+    access: 'public',
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+    allowOverwrite: true
+  });
+  return initialContent;
+}
+
+async function appendRecord(values) {
+  const currentContent = await readExistingContent();
+  const line = values.map(escapeCsvValue).join(',');
+  const nextContent = currentContent.endsWith('\n') ? currentContent + line + '\n' : currentContent + '\n' + line + '\n';
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    await put(blobKey, nextContent, {
+      access: 'public',
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      allowOverwrite: true
+    });
+    return nextContent;
+  }
+
+  ensureLocalFile();
+  fs.appendFileSync(filePath, line + '\n', 'utf8');
+  return fs.readFileSync(filePath, 'utf8');
+}
+
+export default async function handler(req, res) {
+  try {
+    if (req.method === 'GET') {
+      const data = await readExistingContent();
+      res.status(200).send(data);
+      return;
+    }
+
+    if (req.method === 'POST') {
+      const body = getJsonBody(req);
+      const values = [body.patientId || '', body.fullName || '', body.bloodGroup || '', body.address || ''];
+      await appendRecord(values);
+      res.status(200).json({ ok: true });
+      return;
+    }
+
+    res.status(405).json({ ok: false, message: 'Method not allowed' });
+  } catch (error) {
+    res.status(500).json({ ok: false, message: error.message || 'Patient storage failed.' });
+  }
 }
