@@ -2,35 +2,24 @@
 // Hospital Management System JS
 // ===============================
 
-const APPOINTMENTS_CSV_KEY = "hospital_appointments_csv";
-const PATIENTS_CSV_KEY = "hospital_patients_csv";
-
-function escapeCsv(value) {
-    return '"' + String(value).replace(/"/g, '""') + '"';
-}
-
-function appendCsvRecord(storageKey, header, values) {
-    const line = values.map(escapeCsv).join(",");
-    const current = localStorage.getItem(storageKey) || "";
-    const content = current.trim()
-        ? current.trimEnd() + "\n" + line
-        : header + "\n" + line;
-
-    localStorage.setItem(storageKey, content);
-}
-
 function renderCsvPreview() {
     const appointmentsPreview = document.getElementById("savedAppointments");
     const patientsPreview = document.getElementById("savedPatients");
 
     if (appointmentsPreview) {
-        const appointmentsData = localStorage.getItem(APPOINTMENTS_CSV_KEY);
-        appointmentsPreview.textContent = appointmentsData || "Patient Name,Age,Gender,Phone,Email,Department,Doctor,Appointment Date,Appointment Time,Reason";
+        fetch("/api/appointments")
+            .then((response) => response.text())
+            .then((data) => {
+                appointmentsPreview.textContent = data.trim() ? data : "Patient Name,Age,Gender,Phone,Email,Department,Doctor,Appointment Date,Appointment Time,Reason";
+            });
     }
 
     if (patientsPreview) {
-        const patientsData = localStorage.getItem(PATIENTS_CSV_KEY);
-        patientsPreview.textContent = patientsData || "Patient ID,Full Name,Blood Group,Address";
+        fetch("/api/patients")
+            .then((response) => response.text())
+            .then((data) => {
+                patientsPreview.textContent = data.trim() ? data : "Patient ID,Full Name,Blood Group,Address";
+            });
     }
 }
 
@@ -94,12 +83,28 @@ function bookAppointment() {
         return;
     }
 
-    const header = "Patient Name,Age,Gender,Phone,Email,Department,Doctor,Appointment Date,Appointment Time,Reason";
-    appendCsvRecord(APPOINTMENTS_CSV_KEY, header, [name, age, gender, phone, email, department, doctor, date, time, reason]);
-    renderCsvPreview();
-    document.getElementById("appointmentForm").reset();
-
-    alert("Appointment Booked Successfully and saved locally in CSV format!");
+    fetch("/api/appointments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            patientName: name,
+            age: age,
+            gender: gender,
+            phoneNumber: phone,
+            email: email,
+            department: department,
+            doctor: doctor,
+            appointmentDate: date,
+            appointmentTime: time,
+            reason: reason
+        })
+    })
+        .then((response) => response.json())
+        .then(() => {
+            renderCsvPreview();
+            document.getElementById("appointmentForm").reset();
+            alert("Appointment Booked Successfully and saved in CSV database!");
+        });
 }
 
 // ===============================
@@ -117,12 +122,22 @@ function registerPatient() {
         return;
     }
 
-    const header = "Patient ID,Full Name,Blood Group,Address";
-    appendCsvRecord(PATIENTS_CSV_KEY, header, [patientId, patient, bloodGroup, address]);
-    renderCsvPreview();
-    document.getElementById("patientRegisterForm").reset();
-
-    alert("Patient Registered Successfully and saved locally in CSV format!");
+    fetch("/api/patients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            patientId: patientId,
+            fullName: patient,
+            bloodGroup: bloodGroup,
+            address: address
+        })
+    })
+        .then((response) => response.json())
+        .then(() => {
+            renderCsvPreview();
+            document.getElementById("patientRegisterForm").reset();
+            alert("Patient Registered Successfully and saved in CSV database!");
+        });
 }
 
 // ===============================

@@ -1,3 +1,5 @@
 Patient Name,Age,Gender,Phone,Email,Department,Doctor,Appointment Date,Appointment Time,Reason
 "John Doe","34","Male","9876543210","john@example.com","Cardiology","Dr. Rajesh Kumar","2026-08-01","10:30","Routine checkup"
 "kjfyu","22","Male","76543w","v@gmail.com","Neurology","Dr. Rajesh Kumar","2026-07-12","23:44","soi"
+"Test User","30","Male","9999999999","test@example.com","Cardiology","Dr. Rajesh Kumar","2026-07-10","10:00","Checkup"
+"pavan","20","Male","34985","vijaykamar1430@gmail.com","Neurology","Dr. Priya Sharma","2026-07-15","21:50","vijya"
